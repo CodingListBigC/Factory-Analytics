@@ -7,9 +7,11 @@ from settings.enviroment import Env
 def graph_data(factory_info: FactoryInfo, interval: int):
     data = factory_info.get_data()
 
+    print(data)
+
     # Extract the individual arrays
-    raw_time_array = data[0].astype(int)
-    raw_amount_array = data[1]
+    raw_time_array = data[:, 0].astype(int)
+    raw_amount_array = data[:, 1]
 
     # Create the interval steps for x axis.
     time_array_list = Env.np.arange(
@@ -87,6 +89,5 @@ if __name__ == "__main__":
     factory_info = FactoryInfo()
     factory_info.generate_data()
 
-    # FIXED: Changed data_getter to graph_data to match your function definition
     final_graph_data = graph_data(factory_info, 60)
     print(final_graph_data)
