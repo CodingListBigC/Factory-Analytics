@@ -1,8 +1,9 @@
 import os
 from subprocess import call
-from data_generator.data_getter import graph_data
+
+from data_generator.data_getter import format_time_array, graph_data
+from factory import factory_info
 from factory.factory_info import FactoryInfo
-from factory.time_manger import number_time
 from menu import menu_master
 from settings.enviroment import Env
 
@@ -28,7 +29,7 @@ def main(factory_info: FactoryInfo):
 def pick_options():
     options = ["q", "1", "2", "3", "4"]
     while True:
-        menu_master.title("Graph Options")
+        menu_master.title("Bar Graph Options")
         print("1:Start Time")
         print("2: End Time")
         print("3: Item made per hour")
@@ -61,24 +62,19 @@ def time_graph(factory_info: FactoryInfo, type: int):
             timeIndex = matching_indices[0]
             time_array[timeIndex, 1] += 1
 
-    raw_x: list[int] = time_array[:, 0].tolist()
-    y = time_array[:, 1].tolist()
+    time_array = format_time_array(time_array, 1)
 
-    x = []
-
-    for time_int in raw_x:
-        time_var = number_time(time_int)
-        hour = int(time_var[0])
-        if hour > 12:
-            hour -= 12
-        mintune = int(time_var[1])
-        x.append(f"{hour}:{mintune:0>2}")
+    x = time_array["x"]
+    y = time_array["y"]
 
     fig, ax = Env.plt.subplots(figsize=(5, 2.7), layout="constrained")
 
     ax.bar(x, y)
     ax.set_xlabel(f"{'Start' if type == 0 else 'End'} Time")
     ax.set_ylabel(f"Number of machine {'activated' if type == 0 else 'deactivated'}")
+    if len(x) > 8:
+        ax.set_xticks(x[::2])
+        ax.set_xticklabels(x[::2])
 
     Env.plt.show()
 
@@ -86,23 +82,23 @@ def time_graph(factory_info: FactoryInfo, type: int):
 def adverage_items(factory_info: FactoryInfo, interval: int):
     data = graph_data(factory_info, interval)
 
-    raw_x = data[:, 0].tolist()
-    y = data[:, 1].tolist()
-
-    x = []
-
-    for time_int in raw_x:
-        time_var = number_time(time_int * interval)
-        hour = int(time_var[0])
-        if hour > 12:
-            hour -= 12
-        mintune = int(time_var[1])
-        x.append(f"{hour}:{mintune:0>2}")
+    x = data["x"]
+    y = data["y"]
 
     fig, ax = Env.plt.subplots(figsize=(5, 2.7), layout="constrained")
 
     ax.bar(x, y)
     ax.set_xlabel("Time")
     ax.set_ylabel("Items Made")
+    if len(x) > 8:
+        ax.set_xticks(x[::2])
+        ax.set_xticklabels(x[::2])
 
     Env.plt.show()
+
+
+if __name__ == "__main__":
+    factory_info = FactoryInfo()
+    factory_info.generate_data()
+
+    main(factory_info)

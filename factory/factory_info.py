@@ -72,19 +72,16 @@ class FactoryInfo:
         return ax
 
     def get_data(self):
-        time_array = []
-        data_array = []
-        for machine in self.machines:
-            # Make array for each part
-            time = machine.data["time"]
-            data = machine.data["data"]
+        # Directly pull the arrays/lists from each machine
+        times = [machine.data["time"] for machine in self.machines]
+        datas = [machine.data["data"] for machine in self.machines]
 
-            # Add data to array
-            time_array.extend(time)
-            data_array.extend(data)
+        # Fast concatenation of all sequences into single 1D arrays
+        time_array = Env.np.concatenate(times)
+        data_array = Env.np.concatenate(datas)
 
-        # Combine data and returns
-        return Env.np.vstack((Env.np.array(time_array), Env.np.array(data_array)))
+        # Combine them into your 2D array
+        return Env.np.column_stack((time_array, data_array))
 
     def get_item_list(self, type: int) -> list:
         item_list = []
