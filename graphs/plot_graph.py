@@ -1,5 +1,5 @@
-from environment import Env
-from factory_info import FactoryInfo
+from settings.enviroment import Env
+from factory.factory_info import FactoryInfo
 
 
 def plot_graph(factory_info: FactoryInfo):

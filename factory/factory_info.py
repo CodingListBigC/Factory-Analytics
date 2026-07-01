@@ -1,10 +1,10 @@
 from datetime import datetime, time
 from matplotlib.axes import Axes
 
-import config
-from environment import Env
-from time_manger import get_time_list, random_time
-from data_generator import get_random_list
+from factory.time_manger import get_time_list, random_time
+from data_generator.data_generator import get_random_list
+from settings import config
+from settings import enviroment as Env
 
 
 class Machine:
