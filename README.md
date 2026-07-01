@@ -5,6 +5,8 @@ Clone the repository and install dependencies:
 ```bash
 git clone https://github.com/CodingListBigC/Factory-Analytics.git
 
+cd Factory-Analytics
+
 python -m venv .venv
 . .venv/bin/activate
 
@@ -19,12 +21,7 @@ To run the main project run.
 python main.py
 ```
 
-If you want a certain type of graphs you can run.
+## Todo
 
-```bash
-python -m graphs.plot_graph
-```
-
-```bash
-python -m graphs.line_graph
-```
+- [ ] Be able to edit config in terminal.
+- [ ] Make inputs eazy to write.
