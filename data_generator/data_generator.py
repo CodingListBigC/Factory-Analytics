@@ -1,6 +1,6 @@
 import numpy as np
 
-import config
+from settings import config
 
 np.random.seed(config.RANDOM_SPEED)
 

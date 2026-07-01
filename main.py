@@ -1,4 +1,4 @@
-from factory_info import FactoryInfo
+from factory.factory_info import FactoryInfo
 from graphs.plot_graph import plot_graph
 from graphs import line_graph
 

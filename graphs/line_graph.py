@@ -1,5 +1,5 @@
-from factory_info import FactoryInfo
-from environment import Env
+from settings.enviroment import Env
+from factory.factory_info import FactoryInfo
 
 
 def get_graph_data(factory_info: FactoryInfo):
