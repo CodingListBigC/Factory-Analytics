@@ -1,7 +1,7 @@
 from datetime import datetime, time
 from matplotlib.axes import Axes
 
-from factory.time_manger import get_time_list, random_time
+from factory.time_manger import get_time_list, random_time, time_to_number
 from data_generator.data_generator import get_random_list
 from settings import config
 from settings import enviroment as Env
@@ -85,6 +85,21 @@ class FactoryInfo:
 
         # Combine data and returns
         return Env.np.vstack((Env.np.array(time_array), Env.np.array(data_array)))
+
+    def get_item_list(self, type: int) -> list:
+        item_list = []
+
+        for machine in self.machines:
+            if type == 0:
+                item_list.append(
+                    time_to_number(machine.start_time.hour, machine.start_time.minute)
+                )
+            elif type == 1:
+                item_list.append(
+                    time_to_number(machine.end_time.hour, machine.end_time.minute)
+                )
+
+        return item_list
 
     def __str__(self) -> str:
         return "\n".join(str(machine) for machine in self.machines)
